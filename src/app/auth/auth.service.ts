@@ -31,11 +31,12 @@ export class AuthService implements OnInit {
       if (res && res.accessToken) {
 
         localStorage.setItem('access_token', res.accessToken);
+        localStorage.setItem('refresh_token', res.refreshToken);
         if (res && res._id !== undefined) {
           this.currentUser = res;
           console.log(res._id);
           this.userID = res._id
-          this.router.navigate(['user-profile/', res._id]);
+          this.router.navigate(['home']);
         } else {
           // Xử lý trường hợp res.msg hoặc res.msg._id là undefined (nếu cần)
         }
@@ -66,7 +67,7 @@ export class AuthService implements OnInit {
   doLogout() {
     let removeToken = localStorage.removeItem('access_token');
     if (removeToken == null) {
-      this.router.navigate(['log-in']);
+      this.router.navigate(['login']);
     }
   }
 

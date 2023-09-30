@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ServicesService } from 'src/app/shared/services.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
+  hide = true;
+  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder, private appComponent: AppComponent) {
 
 
   }
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
   pass!: string;
 
   ngOnInit(): void {
-
+    this.appComponent.showHeader = false;
+    this.appComponent.showContent = false;
    this.loginForm = this.fb.group({
       email: [''],
       password: ['']
@@ -38,7 +40,7 @@ export class LoginComponent implements OnInit {
     })
   }
 
- 
+
   register(){
     this.authService.signUp(this.registerForm.value).subscribe( res =>{
       if( res.result){

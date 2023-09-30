@@ -1,30 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
-import { ParentsComponent } from './parents/parents.component';
-import { ChildComponent } from './child/child.component';
 import { LoginComponent } from './views/login/login.component';
 import { UserProfileComponent } from './views/user-profile/user-profile.component';
 import { AuthGuard } from './shared/auth.guard';
+import { BlogDetailComponent } from './views/blog-detail/blog-detail.component';
 const routes: Routes = [
 
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {
-    path: 'home', component: HomeComponent
+    path: 'home', component: HomeComponent, data: {
+    }
   },
-  {
-    path: 'reminder',
-    component: ChildComponent,
-    data: {
-      requiredAuth: true
-    },
-    canActivate: [AuthGuard]
-  },
+
   {
     path: 'login',
     component: LoginComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: false,
     },
     canActivate: [AuthGuard]
   },
@@ -36,11 +29,19 @@ const routes: Routes = [
       requiredAuth: true
     },
   },
+  {
+    path: 'blog-detail/:id',
+    component: BlogDetailComponent,
+    canActivate: [AuthGuard],
+    data: {
+      requiredAuth: true
+    },
+  },
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

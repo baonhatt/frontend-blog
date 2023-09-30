@@ -33,4 +33,7 @@ export class ServicesService {
   deleteBlog(id: string){
     return this.http.delete(`http://localhost:3000/blog/${id}`)
   }
+  getBlogDetail(id: string): Observable<any[]>{
+    return this.http.get<Blog[]>(`http://localhost:3000/blog/${id}`)
+  }
 }

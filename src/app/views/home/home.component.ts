@@ -3,6 +3,7 @@ import { Blog } from '../../model/blog.model';
 import { City } from 'src/app/model/city.model';
 import { Movie } from 'src/app/model/movie.model';
 import { ServicesService } from 'src/app/shared/services.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-home',
@@ -19,13 +20,12 @@ export class HomeComponent implements OnInit {
   city: City[] = [];
   selectedCity: any;
   blog: Blog[] = [];
-  constructor(private service: ServicesService) {
+  constructor(private service: ServicesService, private aComponent: AppComponent) {
 
   }
 
 
   ngOnInit(): void {
-
 
 
     this.service.getmovie().subscribe(res => {
