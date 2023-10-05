@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DemodirectiveDirective } from './shared/demodirective.directive';
-import { FormControlDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControlDirective, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './views/login/login.component';
 import { AuthInterceptor } from '../app/auth/auth.interceptor';
 import { UserProfileComponent } from './views/user-profile/user-profile.component';
@@ -17,6 +17,8 @@ import { HeaderComponent } from './views/header/header.component';
 import { LoginModule } from './views/login/login.module';
 import { RouterModule } from '@angular/router';
 import { LayoutComponent } from './views/layout/layout.component';
+import { BlogComponent } from './views/blog/blog.component';
+import { TimeAgoPipe } from './time-ago.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,11 @@ import { LayoutComponent } from './views/layout/layout.component';
     UserProfileComponent,
     BlogDetailComponent,
     HeaderComponent,
-    LayoutComponent
+    LayoutComponent,
+    BlogComponent,
+    TimeAgoPipe,
+    
+
   ],
   imports: [
     LoginModule, // Add the LoginModule here
@@ -37,7 +43,7 @@ import { LayoutComponent } from './views/layout/layout.component';
     FullCalendarModule,
     HttpClientModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     {

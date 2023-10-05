@@ -4,6 +4,8 @@ import { City } from 'src/app/model/city.model';
 import { Movie } from 'src/app/model/movie.model';
 import { ServicesService } from 'src/app/shared/services.service';
 import { AppComponent } from 'src/app/app.component';
+import { formatDistanceToNow } from 'date-fns';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -11,32 +13,42 @@ import { AppComponent } from 'src/app/app.component';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  inputString: string = 'Hello';
+  formattedCreatedAt: any[] = [];
   searchResult: Movie[] = [];
   DisplayMovie: Movie[] = [];
   name: any = '';
-  car = ["Ferrari", "Lamborghini", "Koenigsegg"];
+  i: any;
   city: City[] = [];
   selectedCity: any;
   blog: Blog[] = [];
-  constructor(private service: ServicesService, private aComponent: AppComponent) {
-
+  comment!: any;
+  commentForm!: FormGroup;
+  constructor(private service: ServicesService, private aComponent: AppComponent, private fb: FormBuilder) {
+    this.commentForm = this.fb.group({
+      user: [''],
+      text: [''],
+    })
   }
 
 
   ngOnInit(): void {
 
 
-    this.service.getmovie().subscribe(res => {
-      this.searchResult = res
-      this.DisplayMovie = this.searchResult;
-    })
+    this.service.getblog().subscribe( (res) =>{
+      this.blog = res;
 
-    this.service.getCity().subscribe(res => {
-      this.city = res;
 
-      this.selectedCity = this.city[0]
+      this.blog.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return dateB.getTime() - dateA.getTime();
+      });
+      this.formattedCreatedAt = this.blog.map( post =>{
+        return {
+          ...post,
+          formattedTime: this.formatInstagramTimestamp(post.createdAt)
+        }
+      });
     })
 
 
@@ -44,10 +56,23 @@ export class HomeComponent implements OnInit {
 
 
   }
+  async getPostId(id: string){
+    await this.service.getBlogDetail(id).subscribe(res =>{
+      console.log(res);
 
-  reverse(inputString: string) {
-    this.inputString = inputString.split('').reverse().join('');
+    })
+    return
   }
+  commentPost(blogId: string, commentForm: FormGroup){
+    return this.service.comment(blogId, this.commentForm.value).subscribe( (res: any) =>{
+    })
+  }
+
+  formatInstagramTimestamp(timestamp: Date): string {
+    const parsedTimestamp = new Date(timestamp);
+    return formatDistanceToNow(parsedTimestamp, { addSuffix: true });
+  }
+
 
 
   search(event: any) {

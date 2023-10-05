@@ -31,9 +31,12 @@ export class ServicesService {
     return this.http.post(`http://localhost:3000/blog`, data);
   }
   deleteBlog(id: string){
-    return this.http.delete(`http://localhost:3000/blog/${id}`)
+    return this.http.delete(`http://localhost:3000/blog/${id}`);
   }
   getBlogDetail(id: string): Observable<any[]>{
-    return this.http.get<Blog[]>(`http://localhost:3000/blog/${id}`)
+    return this.http.get<Blog[]>(`http://localhost:3000/blog/${id}`);
+  }
+  comment( blogId: string, data: Comment): Observable<Comment> {
+    return this.http.post<any>(`http://localhost:3000/blog/${blogId}/comments`, data);
   }
 }

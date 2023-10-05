@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class AuthService implements OnInit {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
-  userID!: string
+  userID!: any
 
 
   constructor(private http: HttpClient, public router: Router) { }
@@ -35,7 +35,8 @@ export class AuthService implements OnInit {
         if (res && res._id !== undefined) {
           this.currentUser = res;
           console.log(res._id);
-          this.userID = res._id
+          this.userID = localStorage.setItem("userID",res._id)
+
           this.router.navigate(['home']);
         } else {
           // Xử lý trường hợp res.msg hoặc res.msg._id là undefined (nếu cần)
@@ -48,7 +49,6 @@ export class AuthService implements OnInit {
     // Ví dụ: kiểm tra thời gian hết hạn của token
     const token = localStorage.getItem('access_token');
     if (token) {
-      // Giả sử bạn đã lưu thời gian hết hạn của token trong payload của token
       // Thay 'exp' bằng tên thuộc tính thời gian hết hạn thực tế trong token của bạn
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       const expirationDate = new Date(tokenPayload.exp * 1000); // Chuyển đổi thành mili giây
