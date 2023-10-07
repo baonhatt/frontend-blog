@@ -42,6 +42,9 @@ export class AuthService implements OnInit {
           // Xử lý trường hợp res.msg hoặc res.msg._id là undefined (nếu cần)
         }
       }
+    },err =>{
+      console.log(err.message);
+
     })
   }
   isTokenValid(): boolean {

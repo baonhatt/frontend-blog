@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.authService.signin(this.loginForm.value);
+    this.authService.signin(this.loginForm.value)
   }
 
 }
